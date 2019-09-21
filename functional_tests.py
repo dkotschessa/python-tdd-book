@@ -1,32 +1,34 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Firefox()
-# edith has heard about a cool new to-do app. She goes
-# to check out its homepage
-browser.get('http://localhost:8000')
+class NewVisitorTest(unittest.TestCase):
+    
+    def setUp(self):
+        self.browser = webdriver.Firefox()
 
-# she notices the page title and header mention to-do lists
-assert 'To-Do' in browser.title
+    def tearDown(self):
+        self.browser.quit()
 
-# she is invited to enter them straight away
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # edith has heard about a cool new to-do app. She goes
+        # to check out its homepage
+        self.browser.get('http://localhost:8000')
 
-# she types "buy peackock feathers" into a text box (she likes
-# fly tying)
+        # she notices the page title and header mention to-do lists
+        self.assertIn('To-Do', self.browser.title)
+        self.fail('Finish the test!')
 
-# she hits enter and the page lists
-# "1: buy peackock feathers" as a to do
+        # there is still a text box for another item
+        # she enters "User peackock feathers to make a fly"
 
-# there is still a text box for another item
-# she enters "User peackock feathers to make a fly"
+        # the page updates again showing both items
 
-# the page updates again showing both items
+        # she sees the site has generated a unique URL
+        # there is some explanatory text to that effect
 
-# she sees the site has generated a unique URL
-# there is some explanatory text to that effect
+        # she visits that URL - her to do list is still there
 
-# she visits that URL - her to do list is still there
+        # satisfied, she goes back to sleep
 
-# satisfied, she goes back to sleep
-
-browser.quit()
-
+if __name__ == '__main__':
+    unittest.main(warnings='ignore')
